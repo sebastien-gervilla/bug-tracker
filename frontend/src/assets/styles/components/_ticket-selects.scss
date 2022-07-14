@@ -1,0 +1,14 @@
+.ticket-selects {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    .form-input {
+        width: 25%;
+
+        &:first-child {
+            width: 32.5%;
+        }
+    }
+}

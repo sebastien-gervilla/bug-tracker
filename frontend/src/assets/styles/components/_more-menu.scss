@@ -1,0 +1,31 @@
+.more-menu {
+    position: absolute;
+    top: -20%;
+    right: 7.5%;
+
+    background-color: $light-color;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+
+    button {
+        display: block;
+
+        width: 8rem;
+        height: 2.5rem;
+        padding: .5rem 1rem;
+
+        border: none;
+        background-color: transparent;
+
+        font-size: 1.1rem;
+        text-align: left;
+
+        transition: .2s ease;
+
+        &:hover {
+            background-color: $gray-color;
+
+            cursor: pointer;
+            transition: .2s ease;
+        }
+    }
+}

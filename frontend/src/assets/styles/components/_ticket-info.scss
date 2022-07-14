@@ -1,0 +1,64 @@
+.ticket-info {
+    width: 35vw;
+    margin: 2.5rem;
+
+    height: 30rem;
+
+    @include component-theme;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        padding: 2rem;
+
+        h3 {
+            font-size: 1.6rem;
+        }
+    }
+
+    .infos {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        width: 100%;
+        padding: 1.5rem 2rem;
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 50%;
+
+            width: 90%;
+            height: .01rem;
+
+            background-color: rgba(0, 0, 0, .2);
+            
+            transform: translateX(-50%);
+        }
+
+        p {
+            font-size: 1rem;
+        }
+
+        .category {
+            margin-bottom: .5rem;
+
+            color: $main-color;
+
+            font-size: .8rem;
+        }
+
+        .info {
+            width: 35%;
+
+            &:first-child {
+                width: 65%;
+            }
+        }
+    }
+}

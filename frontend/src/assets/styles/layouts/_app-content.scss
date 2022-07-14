@@ -1,0 +1,12 @@
+.app-content {
+    display: flex;
+
+    .side-content {
+        display: flex;
+        flex-direction: column;
+
+        .content-row {
+            display: flex;
+        }
+    }
+}

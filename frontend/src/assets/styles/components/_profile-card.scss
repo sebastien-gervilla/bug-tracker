@@ -1,0 +1,42 @@
+.profile-card {
+    @include fullsize-component;
+
+    .profile-header {
+        display: flex;
+        align-items: center;
+
+        height: 12rem;
+        padding: 1rem 2rem;
+
+        img {
+            width: 10rem;
+            height: 10rem;
+            margin-right: 2.5rem;
+
+            border-radius: 10rem;
+        }
+
+        .infos {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            height: 100%;
+            padding: .5rem 0;
+
+            h4 {
+                margin-bottom: .5rem;
+
+                font-size: 1.4rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            button {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}

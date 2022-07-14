@@ -1,0 +1,82 @@
+.comments {
+    @include fullsize-component;
+    max-height: 32rem;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        height: 4.5rem;
+        padding: 1rem;
+
+        input[name=submit] {
+            width: 8rem;
+        }
+
+        input[name=message] {
+            width: 60rem;
+            height: 2.5rem;
+            padding: .5rem;
+
+            background-color: $gray-color;
+            border: none;
+            box-shadow: inset 0 0 3px rgb(0, 0, 0, .1);
+
+            font-size: .9rem;
+        }
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        height: 2.5rem;
+        padding: .5rem 2rem;
+        
+        background-color: rgb(226, 227, 233);
+        border-top: .1vw solid $mid-gray-color;
+        border-bottom: .1vw solid $mid-gray-color;
+
+        font-size: .8rem;
+    }
+
+    .author {
+        width: 40%;
+    }
+
+    .message {
+        width: 55%;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        height: 5rem;
+        padding: 1.5rem 2rem;
+
+        p {
+            font-size: 1.2rem;
+            width: unset;
+        }
+
+        .footer-buttons {
+            display: flex;
+
+            button {
+                @include flex-center;
+    
+                margin-right: .5rem;
+    
+                svg {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}

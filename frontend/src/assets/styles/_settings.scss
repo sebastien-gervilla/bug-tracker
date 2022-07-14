@@ -1,0 +1,104 @@
+// Fonts
+
+@font-face {
+    font-family: "roboto-light";
+    src: url("../fonts/roboto/Roboto-Light.ttf");
+}
+@font-face {
+    font-family: "roboto-regular";
+    src: url("../fonts/roboto/Roboto-Regular.ttf");
+}
+@font-face {
+    font-family: "roboto-medium";
+    src: url("../fonts/roboto/Roboto-Medium.ttf");
+}
+@font-face {
+    font-family: "roboto-bold";
+    src: url("../fonts/roboto/Roboto-Bold.ttf");
+}
+
+// Global styling and variables
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    font-size: 1vw;
+}
+
+// Font variables
+$main-font: "roboto-regular", Helvetica, Arial, sans-serif;
+$light-font: "roboto-light", Helvetica, Arial, sans-serif;
+$bold-font: "roboto-bold", Helvetica, Arial, sans-serif;
+
+//Color variables
+$main-color: #3794F2;
+$secondary-color: #FF5638;
+$light-color: #F1F1F1;
+$dark-color: #313A39;
+$gray-color: #dddfeb;
+$mid-gray-color: #cdd0d6;
+
+
+body {
+    background-color: $gray-color;
+    color: $dark-color;
+
+    font-family: $main-font;
+}
+
+h1, h2, h3, h4 {
+    font-family: $bold-font;
+}
+
+button, input, textarea, select {
+    font-family: $main-font;
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+// Mixins
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin component-theme {
+    background-color: $light-color;
+    color: $dark-color;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+@mixin fullsize-component {
+    width: 75vw;
+    margin: 2.5rem;
+
+    @include component-theme();
+}
+
+// Other variables
+
+.more-btn {
+    &:hover {
+        color: $main-color;
+    }
+}
+
+.delete-btn {
+    &:hover {
+        color: $secondary-color;
+    }
+}

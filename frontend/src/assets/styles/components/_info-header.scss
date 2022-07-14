@@ -1,0 +1,37 @@
+.info-header {
+    display: flex;
+    align-items: center;
+
+    width: 80vw;
+    height: 8rem;
+    padding: 2.5rem;
+    
+    background-color: $main-color;
+    color: $light-color;
+
+    h3 {
+        width: 25%;
+
+        font-size: 1.4vw;
+    }
+
+    p {
+        width: 65%;
+
+        font-size: 1.2vw;
+    }
+
+    button {
+        width: 10%;
+
+        background-color: transparent;
+        color: $light-color;
+        border: none;
+
+        font-size: 1.5vw;
+
+        svg {
+            cursor: pointer;
+        }
+    }
+}
