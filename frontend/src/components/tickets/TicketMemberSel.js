@@ -6,7 +6,7 @@ const TicketMemberSel = ({ membersId, handleSelectChanges, ticketId }) => {
 
     const [users, setUsers] = useState([]);
 
-    const loadUsers = () => {
+    const loadUsers = () => { // project users
         if (!membersId)
             return;
         let sentData = {membersId: membersId};
@@ -36,6 +36,8 @@ const TicketMemberSel = ({ membersId, handleSelectChanges, ticketId }) => {
     useEffect(() => { loadMembers(); loadUsers() });
 
     const loadOptions = () => {
+        if (!users.length)
+            return;
         let options = [];
         const ticketMembersId = members.map(member => member._id);
         users.forEach(user => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { fetchApi } from '../utils/api-fetch';
 import TicketMemberSel from './tickets/TicketMemberSel';
@@ -6,10 +6,6 @@ import TicketMemberSel from './tickets/TicketMemberSel';
 const MemberModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
 
     const [membersId, setMembersId] = useState([]);
-
-    useEffect(() => {
-        setMembersId(membersId);
-    }, []);
 
     const handleSelectChanges = (event) => {
         const values = Array.from(event.target.selectedOptions, option => option.value);

@@ -1,4 +1,3 @@
-const Project = require('../models/project-model');
 const Ticket = require('../models/ticket-model');
 const User = require('../models/user-model');
 const { validationResult } = require('express-validator');

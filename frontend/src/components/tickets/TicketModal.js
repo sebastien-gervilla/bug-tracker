@@ -11,7 +11,7 @@ const TicketModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
 
     useEffect(() => {
         setTickInfo(ticketInfo);
-    }, []);
+    }, [ticketInfo]);
 
     const handleChanges = (event) => {
         setTickInfo({...tickInfo, [event.target.name]: event.target.value});

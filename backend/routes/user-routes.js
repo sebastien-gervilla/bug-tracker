@@ -27,8 +27,8 @@ Router.post('/login', login);
 
 Router.post('/logout', logout);
 
-Router.put('/', editUser);
+Router.put('/:id', editUser);
 
-Router.delete('/', deleteUser);
+Router.delete('/:id', deleteUser);
 
 module.exports = Router;
