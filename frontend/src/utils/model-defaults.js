@@ -2,8 +2,9 @@ const getUserDef = () => {
     return {
         name: '',
         lname: '',
-        role: '',
-        email: ''
+        role: 'Développeur',
+        email: '',
+        password: ''
     };
 };
 

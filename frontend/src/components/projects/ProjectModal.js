@@ -11,7 +11,7 @@ const ProjectModal = ({ projectInfo, toggleModal, modalType }) => {
 
     useEffect(() => {
         setProjInfo(projectInfo);
-    }, []);
+    }, [projectInfo]);
 
     const handleChanges = (event) => {
         setProjInfo({...projInfo, [event.target.name]: event.target.value});

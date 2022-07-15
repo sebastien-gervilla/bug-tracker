@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import TeamMember from './TeamMember';
-import { getUserDef } from '../utils/model-defaults';
 import { fetchApi } from '../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
@@ -13,10 +12,11 @@ const Team = ({ toggleModal }) => {
     const loadUsers = () => {
         fetchApi('account/getusers', 'GET', null, (data) => {
             if (data.success === true) {
+                const dataUsers = data.users.filter(user => user.role !== "Admin");
                 const ids = users.map(user => [user._id, user.updatedAt]);
-                const dataIds = data.users.map(user => [user._id, user.updatedAt]);
+                const dataIds = dataUsers.map(user => [user._id, user.updatedAt]);
                 if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setUsers(data.users);
+                    setUsers(dataUsers);
             }
         });
     };

@@ -9,7 +9,7 @@ const UserModal = ({ user, toggleModal, modalType }) => {
 
     useEffect(() => {
         setUserInfo(user);
-    }, []);
+    }, [user]);
 
     const handleChanges = (event) => {
         setUserInfo({...userInfo, [event.target.name]: event.target.value});

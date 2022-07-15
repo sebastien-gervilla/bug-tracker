@@ -31,7 +31,7 @@ const AppTeam = () => {
 
     const manageModal = () => {
         if (openModal) 
-            return <UserModal projectInfo={modalInfo} toggleModal={toggleModal} modalType={modalType} />;
+            return <UserModal user={modalInfo} toggleModal={toggleModal} modalType={modalType} />;
     };
 
     return (
