@@ -1,5 +1,6 @@
 const User = require('../models/user-model');
 const { validationResult } = require('express-validator');
+const ObjectID = require('mongoose').Types.ObjectId;
 const jwt = require('jsonwebtoken');
 
 const getUser = async (req, res) => {
@@ -141,7 +142,7 @@ const editUser = async (req, res) => {
 
     const updateSet = {
         name: req.body.name,
-        lame: req.body.lame,
+        lname: req.body.lname,
         role: req.body.role,
         email: req.body.email
     };
@@ -164,6 +165,33 @@ const editUser = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Couldn't edit user."
+        });
+    }
+};
+
+const deleteUser = async (req, res) => {
+    const id = req.params.id;
+    if (!id)
+        return res.status(400).json({
+            success: false,
+            message: "User ID is required."
+        });
+
+    try {
+        const user = await User.findByIdAndDelete(id);
+        return res.status(200).json({
+            success: true,
+            message: "Successfully deleted user."
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Couldn't delete user."
+        });
     }
 };
 
@@ -180,29 +208,6 @@ const generateToken = async (user, res) => {
         message: "Successfully created token.",
         token
     });
-};
-
-const deleteUser = async (req, res) => {
-    const id = req.params.id;
-    if (!id)
-        return res.status(400).json({
-            success: false,
-            message: "User ID is required."
-        });
-
-    try {
-        const user = await User.findByIdAndDelete(id);
-        await deleteUserTickets(user._id);
-        return res.status(200).json({
-            success: true,
-            message: "Successfully deleted user."
-        });
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: "Couldn't delete user."
-        });
-    }
 };
 
 module.exports = { getUser, getUsers, fetchUsers, register, login, logout, editUser, deleteUser };
