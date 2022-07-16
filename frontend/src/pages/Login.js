@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import ErrorMsg from '../components/ErrorMsg';
 import { fetchApi } from '../utils/api-fetch';
 
 const Login = () => {
@@ -8,6 +9,8 @@ const Login = () => {
         email: '',
         password: ''
     });
+
+    const [logError, setLogError] = useState('');
 
     const navigate = useNavigate();
 
@@ -18,12 +21,19 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         fetchApi('account/login', 'POST', logInfo, (data) => {
+            if (data.success === false)
+                setLogError(data.message);
             if (data.success === true) {
                 navigate('../app/profile');
                 return;
             } 
         });
         setLogInfo({...logInfo, password: ''});
+    };
+
+    const manageLogError = () => {
+        if (logError)
+            return <ErrorMsg error={logError} />
     };
 
     return (
@@ -40,6 +50,7 @@ const Login = () => {
                             <p>PASSWORD</p>
                             <input onChange={handleChanges} name="password" type="password" value={logInfo['password']} />
                         </div>
+                        {manageLogError()}
                         <div className="form-input">
                             <input onClick={handleSubmit} name="submit" type="submit" value="Se connecter" />
                         </div>
