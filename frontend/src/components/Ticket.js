@@ -27,11 +27,11 @@ const Ticket = ({ ticket, loadTickets, toggleModal }) => {
     };
 
     return (
-        <div className="project">
-            <p className="proj-name"><NavLink to={'/app/tickets/' + ticket._id} >{ticket.name}</NavLink></p>
-            <p className="proj-desc">{ticket.desc}</p>
-            <p className="proj-manager">{ticket.author}</p>
-            <button><RiMore2Line onClick={toggleMore} /></button>
+        <div className="ticket app-collection-el">
+            <p className="first"><NavLink to={'/app/tickets/' + ticket._id} >{ticket.name}</NavLink></p>
+            <p className="second">{ticket.desc}</p>
+            <p className="third">{ticket.author}</p>
+            <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
             {manageMore()}
         </div>
     );

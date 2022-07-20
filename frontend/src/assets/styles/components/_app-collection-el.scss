@@ -12,7 +12,13 @@
     transition: .2s ease;
 
     p {
+        max-height: 2.5rem;
+        padding-right: 1rem;
+        overflow-y: hidden;
+
         font-size: 1rem;
+        text-overflow: ellipsis;
+        word-break: break-word;
     }
 
     .more-button {

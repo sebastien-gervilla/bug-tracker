@@ -62,19 +62,19 @@ const Projects = ({ toggleModal }) => {
     };
 
     return (
-        <div className="projects">
-            <div className="projects-header">
+        <div className="projects app-collection">
+            <div className="header">
                 <h3>Projects</h3>
                 <button className='add-btn' onClick={handleAdd} >Ajouter</button>
             </div>
-            <div className="projects-menu">
-                <p className="proj-name">NOM DU PROJECT</p>
-                <p className="proj-desc">DESCRIPTION</p>
-                <p className="proj-manager">MANAGER</p>
+            <div className="menu">
+                <p className="first">NOM DU PROJECT</p>
+                <p className="second">DESCRIPTION</p>
+                <p className="third">MANAGER</p>
             </div>
             {displayProjects()}
-            <div className="projects-footer">
-                <div className="footer-buttons">
+            <div className="footer">
+                <div className="buttons">
                     <button className='switch-btn' onClick={changePage} value="-1"><VscChevronLeft/></button>
                     <button className='switch-btn' onClick={changePage} value="1"><VscChevronRight/></button>
                 </div>

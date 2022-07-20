@@ -27,11 +27,11 @@ const Project = ({ project, loadProjects, toggleModal }) => {
     };
 
     return (
-        <div className="project">
-            <p className="proj-name"><NavLink to={'/app/projects/' + project._id} >{project.name}</NavLink></p>
-            <p className="proj-desc">{project.desc}</p>
-            <p className="proj-manager">{project.author}</p>
-            <button><RiMore2Line onClick={toggleMore} /></button>
+        <div className="project app-collection-el">
+            <p className="first"><NavLink to={'/app/projects/' + project._id} >{project.name}</NavLink></p>
+            <p className="second">{project.desc}</p>
+            <p className="third">{project.author}</p>
+            <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
             {manageMore()}
         </div>
     );
