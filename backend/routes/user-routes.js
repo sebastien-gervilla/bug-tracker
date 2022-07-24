@@ -4,13 +4,15 @@ const Router = express.Router();
 const { check } = require('express-validator');
 const { getUser, getUsers, fetchUsers, register, 
     login, logout, editUser, deleteUser } = require('../controllers/user-controllers');
-const { isAuth } = require('../middlewares/auth');
+const { isAuth, isAuthAdmin } = require('../middlewares/auth');
 
 // Routes
 
 Router.get('/', getUser);
 
 Router.get('/isauth', isAuth);
+
+Router.get('/isauth-admin', isAuthAdmin);
 
 Router.get('/getusers', getUsers);
 
