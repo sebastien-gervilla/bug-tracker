@@ -60,6 +60,11 @@ const Projects = ({ toggleModal, currUser }) => {
         return projs;
     };
 
+    const manageAddProject = () => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+    };
+
     const handleAdd = (event) => {
         event.preventDefault();
         toggleModal();
@@ -69,7 +74,7 @@ const Projects = ({ toggleModal, currUser }) => {
         <div className="projects app-collection">
             <div className="header">
                 <h3>Projects</h3>
-                <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+                {manageAddProject()}
             </div>
             <div className="menu">
                 <p className="first">NOM DU PROJECT</p>
