@@ -3,7 +3,7 @@ import Ticket from './Ticket';
 import { fetchApi } from '../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
-const Tickets = ({ toggleModal, projectId }) => {
+const Tickets = ({ toggleModal, projectId, currUser }) => {
 
     const [tickets, setTickets] = useState([]);
 
@@ -19,8 +19,10 @@ const Tickets = ({ toggleModal, projectId }) => {
             if (data.success === true) {
                 let infos = tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
                 let dataInfos = data.tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
-                if (JSON.stringify(infos) !== JSON.stringify(dataInfos))
-                    setTickets(data.tickets);
+                if (JSON.stringify(infos) !== JSON.stringify(dataInfos)) {
+                    let newTickets = data.tickets.filter(ticket => ticket.membersId.includes(currUser._id));
+                    setTickets(newTickets);
+                }
             }
         });
     };
