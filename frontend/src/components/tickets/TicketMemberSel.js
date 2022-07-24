@@ -1,47 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../utils/api-fetch';
+import { getUserDef } from '../../utils/model-defaults';
 
-const TicketMemberSel = ({ membersId, handleSelectChanges, ticketId }) => {
-    const [members, setMembers] = useState([]);
+const TicketMemberSel = ({ projMembersId, handleSelectChanges, ticketId }) => {
+    const [tickMembers, setTickMembers] = useState([]);
 
-    const [users, setUsers] = useState([]);
+    const [projMembers, setProjMembers] = useState([]);
 
-    const loadUsers = () => { // project users
-        if (!membersId)
+    const [currUser, setCurrUser] = useState(getUserDef());
+
+    useEffect(() => {
+        fetchApi('account/', 'GET', null, (data) => {
+            if (data.success === true)
+                if (JSON.stringify(data.user._id) !== JSON.stringify(currUser._id))
+                    setCurrUser(data.user);
+        });
+    }, []);
+
+    const loadProjectMembers = () => { // project users
+        if (!projMembersId)
             return;
-        let sentData = {membersId: membersId};
+        let sentData = {membersId: projMembersId};
         fetchApi('account/fetchusers', 'POST', sentData, (data) => {
             if (data.success === true) {
-                const ids = users.map(user => user['_id']);
+                const ids = projMembers.map(user => user['_id']);
                 const dataIds = data.users.map(user => user['_id']);
                 if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setUsers(data.users);
+                    setProjMembers(data.users);
             }
         });
     };
 
-    const loadMembers = () => {
+    const loadTicketMembers = () => {
         if (!ticketId)
             return;
         fetchApi(`app/tickets/members/${ticketId}`, 'GET', null, (data) => {
             if (data.success === true) {
-                const ids = members.map(user => user['_id']);
+                const ids = tickMembers.map(user => user['_id']);
                 const dataIds = data.members.map(user => user._id);
                 if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setMembers(data.members);
+                    setTickMembers(data.members);
             }
         });
     };
 
-    useEffect(() => { loadMembers(); loadUsers() });
+    useEffect(() => { loadTicketMembers(); loadProjectMembers() });
 
     const loadOptions = () => {
-        if (!users.length)
+        if (!projMembers.length)
             return;
         let options = [];
-        const ticketMembersId = members.map(member => member._id);
-        users.forEach(user => {
-            if (!ticketMembersId.includes(user._id))
+        const ticketMembersId = tickMembers.map(member => member._id);
+        projMembers.forEach(user => {
+            if (!ticketMembersId.includes(user._id) && (user._id !== currUser._id))
                 options.push(<option value={user._id} key={user._id}>{user.name + ' ' + user.lname}</option>)
         });
         return options;

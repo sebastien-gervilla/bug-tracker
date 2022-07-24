@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchApi } from '../utils/api-fetch';
 import Projects from '../components/Projects';
 import ProjectModal from '../components/projects/ProjectModal';
 import SideBar from '../components/SideBar';
-import { getProjectDef } from '../utils/model-defaults';
+import { getProjectDef, getUserDef } from '../utils/model-defaults';
 
 const AppProjects = () => {
 
@@ -16,14 +16,18 @@ const AppProjects = () => {
         name: '', desc: '', membersId: []
     });
 
+    const [currUser, setCurrUser] = useState(getUserDef());
+
     const navigate = useNavigate();
 
-    const getIsLogged = () => {
+    useEffect(() => {
         fetchApi('account/isauth', 'GET', null, (data) => {
             if (data.success !== true)
                 navigate('../../account/login');
+            if (data.success === true)
+                setCurrUser(data.user);
         });
-    }; getIsLogged();
+    }, [])
 
     const toggleModal = (modalName='project', modalType='add', info=getProjectDef()) => {
         setModalInfo(info);
@@ -41,7 +45,7 @@ const AppProjects = () => {
             <div className="app-content" id='projects-content'>
                 <SideBar />
                 <section className='side-content'>
-                    <Projects toggleModal={toggleModal} />
+                    <Projects toggleModal={toggleModal} currUser={currUser} />
                 </section>
             </div>
             {manageModal()}

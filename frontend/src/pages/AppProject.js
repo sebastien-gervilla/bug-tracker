@@ -6,7 +6,7 @@ import TicketModal from '../components/tickets/TicketModal';
 import ProjectModal from '../components/projects/ProjectModal';
 import SideBar from '../components/SideBar';
 import { fetchApi } from '../utils/api-fetch';
-import { getProjectDef, getTicketDef } from '../utils/model-defaults';
+import { getProjectDef, getTicketDef, getUserDef } from '../utils/model-defaults';
 
 const AppProject = () => {
 
@@ -25,22 +25,31 @@ const AppProject = () => {
         ticket: getTicketDef()
     });
 
+    const [currUser, setCurrUser] = useState(getUserDef);
+
     const navigate = useNavigate();
 
-    const getIsLogged = () => {
+    useEffect(() => {
         fetchApi('account/isauth', 'GET', null, (data) => {
             if (data.success !== true)
                 navigate('../../account/login');
+            if (data.success === true)
+                setCurrUser(data.user);
         });
-    }; getIsLogged();
+    }, []);
 
     useEffect(() => loadProject());
 
     const loadProject = () => {
+        if (!currUser._id)
+            return;
         fetchApi(`app/projects/${id}`, 'GET', null, (data) => {
             if (data.success === false)
                 navigate('../app/projects');
             if (data.success === true) {
+                if (!data.project.membersId.includes(currUser._id))
+                    navigate('../app/projects');
+
                 let infos = [modalsInfo.project['_id'], modalsInfo.project['updatedAt']];
                 let dataInfos = [data.project['_id'], data.project['updatedAt']];
                 if (JSON.stringify(infos) !== JSON.stringify(dataInfos))
@@ -81,7 +90,7 @@ const AppProject = () => {
                 <SideBar />
                 <section className='side-content'>
                     <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
-                    <Tickets toggleModal={toggleModal} projectId={modalsInfo.project._id} />
+                    <Tickets toggleModal={toggleModal} projectId={modalsInfo.project._id} currUser={currUser} />
                 </section>
             </div>
             {manageModals()}

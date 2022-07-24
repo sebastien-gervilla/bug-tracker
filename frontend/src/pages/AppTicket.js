@@ -5,7 +5,7 @@ import TicketModal from '../components/tickets/TicketModal';
 import ProjectModal from '../components/projects/ProjectModal';
 import MemberModal from '../components/MemberModal';
 import { fetchApi } from '../utils/api-fetch';
-import { getTicketDef, getProjectDef } from '../utils/model-defaults';
+import { getTicketDef, getProjectDef, getUserDef } from '../utils/model-defaults';
 import { useNavigate, useParams } from 'react-router-dom';
 import TicketInfo from '../components/tickets/TicketInfo';
 import Comments from '../components/tickets/Comments';
@@ -29,22 +29,30 @@ const AppTicket = () => {
         member: getTicketDef()
     });
 
+    const [currUser, setCurrUser] = useState(getUserDef());
+
     const navigate = useNavigate();
 
-    const getIsLogged = () => {
+    useEffect(() => {
         fetchApi('account/isauth', 'GET', null, (data) => {
             if (data.success !== true)
                 navigate('../../account/login');
+            if (data.success === true)
+                setCurrUser(data.user);
         });
-    }; getIsLogged();
+    }, []);
 
     useEffect(() => {loadTicket(); loadProject()});
 
     const loadTicket = () => {
+        if (!currUser._id)
+            return;
         fetchApi(`app/tickets/${id}`, 'GET', null, (data) => {
             if (data.success === false)
                 navigate('../app/projects');
             if (data.success === true) {
+                if (!data.ticket.membersId.includes(currUser._id))
+                    navigate('../app/projects');
                 const info = [modalsInfo.ticket._id, modalsInfo.ticket.updatedAt];
                 const dataInfo = [data.ticket._id, data.ticket.updatedAt];
                 if (JSON.stringify(info) !== JSON.stringify(dataInfo))
@@ -104,7 +112,7 @@ const AppTicket = () => {
                     <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
                     <div className="content-row">
                         <TicketInfo info={modalsInfo.ticket} toggleModal={toggleModal} />
-                        <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} />
+                        <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} currUser={currUser} />
                     </div>
                     <Comments toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} />
                 </div>

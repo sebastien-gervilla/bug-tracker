@@ -3,7 +3,7 @@ import Project from './Project';
 import { fetchApi } from '../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
-const Projects = ({ toggleModal }) => {
+const Projects = ({ toggleModal, currUser }) => {
 
     const [projects, setProjects] = useState([]);
 
@@ -13,12 +13,16 @@ const Projects = ({ toggleModal }) => {
     });
 
     const loadProjects = () => {
+        if (!currUser._id)
+            return;
         fetchApi('app/projects', 'GET', null, (data) => {
             if (data.success === true) {
                 let ids = projects.map(project => [project['_id'], project['updatedAt']]);
                 let dataIds = data.projects.map(project => [project['_id'], project['updatedAt']]);
-                if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setProjects(data.projects);
+                if (JSON.stringify(ids) !== JSON.stringify(dataIds)) {
+                    let newProjects = data.projects.filter(project => project.membersId.includes(currUser._id));
+                    setProjects(newProjects);
+                }
             }
         });
     };
@@ -56,6 +60,11 @@ const Projects = ({ toggleModal }) => {
         return projs;
     };
 
+    const manageAddProject = () => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+    };
+
     const handleAdd = (event) => {
         event.preventDefault();
         toggleModal();
@@ -65,7 +74,7 @@ const Projects = ({ toggleModal }) => {
         <div className="projects app-collection">
             <div className="header">
                 <h3>Projects</h3>
-                <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+                {manageAddProject()}
             </div>
             <div className="menu">
                 <p className="first">NOM DU PROJECT</p>
