@@ -3,7 +3,7 @@ import Project from './Project';
 import { fetchApi } from '../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
-const Projects = ({ toggleModal }) => {
+const Projects = ({ toggleModal, currUser }) => {
 
     const [projects, setProjects] = useState([]);
 
@@ -13,12 +13,16 @@ const Projects = ({ toggleModal }) => {
     });
 
     const loadProjects = () => {
+        if (!currUser._id)
+            return;
         fetchApi('app/projects', 'GET', null, (data) => {
             if (data.success === true) {
                 let ids = projects.map(project => [project['_id'], project['updatedAt']]);
                 let dataIds = data.projects.map(project => [project['_id'], project['updatedAt']]);
-                if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setProjects(data.projects);
+                if (JSON.stringify(ids) !== JSON.stringify(dataIds)) {
+                    let newProjects = data.projects.filter(project => project.membersId.includes(currUser._id));
+                    setProjects(newProjects);
+                }
             }
         });
     };
