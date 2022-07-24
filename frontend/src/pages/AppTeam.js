@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Team from '../components/Team';
 import { useNavigate } from 'react-router-dom';
 import { getUserDef } from '../utils/model-defaults';
@@ -16,12 +16,12 @@ const AppTeam = () => {
 
     const navigate = useNavigate();
 
-    const getIsLogged = () => {
-        fetchApi('account/isauth', 'GET', null, (data) => {
+    useEffect(() => {
+        fetchApi('account/isauth-admin', 'GET', null, (data) => {
             if (data.success !== true)
-                navigate('../../account/login');
+                navigate('../app/profile');
         });
-    }; getIsLogged();
+    }, []);
 
     const toggleModal = (modalName='member', modalType='add', info=getUserDef()) => {
         setModalInfo(info);
