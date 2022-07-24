@@ -112,7 +112,7 @@ const AppTicket = () => {
                     <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
                     <div className="content-row">
                         <TicketInfo info={modalsInfo.ticket} toggleModal={toggleModal} />
-                        <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} />
+                        <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} currUser={currUser} />
                     </div>
                     <Comments toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} />
                 </div>
