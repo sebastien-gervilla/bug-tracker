@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../utils/api-fetch';
+import { getUserDef } from '../utils/model-defaults';
 
 const MembersSelect = ({ membersId, handleSelectChanges }) => {
 
-    const [members, setMembers] = useState([]);
+    const [currUser, setCurrUser] = useState(getUserDef());
 
     const [users, setUsers] = useState([]);
 
-    const loadMembers = () => {
-        let sentData = {membersId: membersId}
-        fetchApi('account/fetchusers', 'POST', sentData, (data) => {
-            if (data.success === true) {
-                let ids = members.map(user => user['_id']);
-                let dataIds = data.users.map(user => user['_id']);
-                if (JSON.stringify(ids) !== JSON.stringify(dataIds))
-                    setMembers(data.users);
-            }
+    useEffect(() => {
+        fetchApi('account/', 'GET', null, (data) => {
+            if (data.success === true)
+                if (JSON.stringify(data.user._id) !== JSON.stringify(currUser._id))
+                    setCurrUser(data.user);
         });
-    };
+    }, []);
 
     const loadUsers = () => {
         fetchApi('account/getusers', 'GET', null, (data) => {
@@ -30,12 +27,12 @@ const MembersSelect = ({ membersId, handleSelectChanges }) => {
         });
     };
 
-    useEffect(() => { loadMembers(); loadUsers() });
+    useEffect(() => loadUsers());
 
     const loadOptions = () => {
         let options = [];
         users.forEach(user => {
-            if (!membersId.includes(user._id))
+            if ((!membersId.includes(user._id)) && (user._id !== currUser._id))
                 options.push(<option value={user._id} key={user._id}>{user.name + ' ' + user.lname}</option>)
         });
         return options;
