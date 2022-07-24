@@ -3,7 +3,7 @@ import { fetchApi } from '../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 import Member from './Member';
 
-const Members = ({ toggleModal, ticketId }) => {
+const Members = ({ toggleModal, ticketId, currUser }) => {
 
     const [members, setMembers] = useState([]);
 
@@ -49,6 +49,11 @@ const Members = ({ toggleModal, ticketId }) => {
         toggleModal('member', 'add', ticketId);
     }
 
+    const manageAddButton = () => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+    };
+
     const displayMembers = () => {
         let comms = []
         let end = 4 * (page + 1);
@@ -66,7 +71,7 @@ const Members = ({ toggleModal, ticketId }) => {
         <div className="members half-sized-list">
             <div className="header">
                 <h3>Membres</h3>
-                <button className='add-btn' onClick={handleAdd} >Ajouter</button>
+                {manageAddButton()}
             </div>
             <div className="menu">
                 <p className="first">NOM</p>
