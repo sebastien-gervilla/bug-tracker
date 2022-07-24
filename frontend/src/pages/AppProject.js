@@ -41,10 +41,15 @@ const AppProject = () => {
     useEffect(() => loadProject());
 
     const loadProject = () => {
+        if (!currUser._id)
+            return;
         fetchApi(`app/projects/${id}`, 'GET', null, (data) => {
             if (data.success === false)
                 navigate('../app/projects');
             if (data.success === true) {
+                if (!data.project.membersId.includes(currUser._id))
+                    navigate('../app/projects');
+
                 let infos = [modalsInfo.project['_id'], modalsInfo.project['updatedAt']];
                 let dataInfos = [data.project['_id'], data.project['updatedAt']];
                 if (JSON.stringify(infos) !== JSON.stringify(dataInfos))
