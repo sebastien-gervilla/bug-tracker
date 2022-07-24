@@ -6,7 +6,7 @@ import TicketModal from '../components/tickets/TicketModal';
 import ProjectModal from '../components/projects/ProjectModal';
 import SideBar from '../components/SideBar';
 import { fetchApi } from '../utils/api-fetch';
-import { getProjectDef, getTicketDef } from '../utils/model-defaults';
+import { getProjectDef, getTicketDef, getUserDef } from '../utils/model-defaults';
 
 const AppProject = () => {
 
@@ -25,14 +25,18 @@ const AppProject = () => {
         ticket: getTicketDef()
     });
 
+    const [currUser, setCurrUser] = useState(getUserDef);
+
     const navigate = useNavigate();
 
-    const getIsLogged = () => {
+    useEffect(() => {
         fetchApi('account/isauth', 'GET', null, (data) => {
             if (data.success !== true)
                 navigate('../../account/login');
+            if (data.success === true)
+                setCurrUser(data.user);
         });
-    }; getIsLogged();
+    }, []);
 
     useEffect(() => loadProject());
 
@@ -81,7 +85,7 @@ const AppProject = () => {
                 <SideBar />
                 <section className='side-content'>
                     <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
-                    <Tickets toggleModal={toggleModal} projectId={modalsInfo.project._id} />
+                    <Tickets toggleModal={toggleModal} projectId={modalsInfo.project._id} currUser={currUser} />
                 </section>
             </div>
             {manageModals()}
