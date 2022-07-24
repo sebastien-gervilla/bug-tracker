@@ -64,19 +64,19 @@ const Tickets = ({ toggleModal, projectId }) => {
     };
 
     return (
-        <div className="projects">
-            <div className="projects-header">
+        <div className="tickets app-collection">
+            <div className="header">
                 <h3>Tickets</h3>
                 <button className='add-btn' onClick={handleAdd} >Ajouter</button>
             </div>
-            <div className="projects-menu">
-                <p className="proj-name">NOM DU TICKET</p>
-                <p className="proj-desc">DESCRIPTION</p>
-                <p className="proj-manager">AUTEUR</p>
+            <div className="menu">
+                <p className="first">NOM DU TICKET</p>
+                <p className="second">DESCRIPTION</p>
+                <p className="third">AUTEUR</p>
             </div>
             {displayTickets()}
-            <div className="projects-footer">
-                <div className="footer-buttons">
+            <div className="footer">
+                <div className="buttons">
                     <button className='switch-btn' onClick={changePage} value="-1"><VscChevronLeft/></button>
                     <button className='switch-btn' onClick={changePage} value="1"><VscChevronRight/></button>
                 </div>
