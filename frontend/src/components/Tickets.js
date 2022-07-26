@@ -36,7 +36,7 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
                 return true;
             return false;
         });
-        console.log(tickets)
+        
         return tickets;
     };
 
