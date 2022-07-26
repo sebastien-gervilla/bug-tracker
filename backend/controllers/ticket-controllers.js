@@ -193,6 +193,11 @@ const createTicket = async (req, res) => {
 
     req.body.authorId = author._id;
     req.body.author = author.name + " " + author.lname;
+    
+    if (!req.body.membersId)
+        req.body.membersId = [];
+    if (!req.body.membersId.includes(author._id))
+        req.body.membersId.push(author._id);
 
     const errors = validationResult(req);
     if (!errors.isEmpty())
