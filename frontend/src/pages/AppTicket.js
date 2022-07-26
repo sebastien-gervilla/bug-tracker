@@ -109,7 +109,8 @@ const AppTicket = () => {
             <div className="app-content" id="ticket-content">
                 <SideBar />
                 <div className="side-content">
-                    <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
+                    <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} 
+                    modalName={'project'} currUserRole={currUser.role} />
                     <div className="content-row">
                         <TicketInfo info={modalsInfo.ticket} toggleModal={toggleModal} />
                         <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} currUser={currUser} />

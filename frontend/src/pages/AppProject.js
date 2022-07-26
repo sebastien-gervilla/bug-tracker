@@ -89,7 +89,8 @@ const AppProject = () => {
             <div className="app-content" id='project-content'>
                 <SideBar />
                 <section className='side-content'>
-                    <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} modalName={'project'} />
+                    <InfoHeader info={modalsInfo.project} toggleModal={toggleModal} 
+                    modalName={'project'} currUserRole={currUser.role} />
                     <Tickets toggleModal={toggleModal} projectId={modalsInfo.project._id} currUser={currUser} />
                 </section>
             </div>
