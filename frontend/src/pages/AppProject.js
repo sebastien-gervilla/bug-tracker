@@ -47,7 +47,7 @@ const AppProject = () => {
             if (data.success === false)
                 navigate('../app/projects');
             if (data.success === true) {
-                if (!data.project.membersId.includes(currUser._id))
+                if (!canAccessData(data.project))
                     navigate('../app/projects');
 
                 let infos = [modalsInfo.project['_id'], modalsInfo.project['updatedAt']];
@@ -57,6 +57,12 @@ const AppProject = () => {
                     ticket: {...modalsInfo.ticket, projectId: data.project._id}});
             }
         });
+    };
+
+    const canAccessData = (dataProject) => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return true;
+        return dataProject.membersId.includes(currUser._id) ? true : false;
     };
 
     const toggleModal = (modalName='project', modalType='add', info=null) => {

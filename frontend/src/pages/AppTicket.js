@@ -35,7 +35,7 @@ const AppTicket = () => {
 
     useEffect(() => {
         fetchApi('account/isauth', 'GET', null, (data) => {
-            if (data.success !== true)
+            if (data.success === false)
                 navigate('../../account/login');
             if (data.success === true)
                 setCurrUser(data.user);
@@ -51,7 +51,7 @@ const AppTicket = () => {
             if (data.success === false)
                 navigate('../app/projects');
             if (data.success === true) {
-                if (!data.ticket.membersId.includes(currUser._id))
+                if (!canAccessData(data.ticket))
                     navigate('../app/projects');
                 const info = [modalsInfo.ticket._id, modalsInfo.ticket.updatedAt];
                 const dataInfo = [data.ticket._id, data.ticket.updatedAt];
@@ -59,6 +59,12 @@ const AppTicket = () => {
                     setModalsInfo({...modalsInfo, ticket: data.ticket, member: data.ticket});
             }
         });
+    };
+
+    const canAccessData = (dataTicket) => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return true;
+        return dataTicket.membersId.includes(currUser._id) ? true : false;
     };
 
     const loadProject = () => {
@@ -115,7 +121,7 @@ const AppTicket = () => {
                         <TicketInfo info={modalsInfo.ticket} toggleModal={toggleModal} />
                         <Members toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} currUser={currUser} />
                     </div>
-                    <Comments toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} />
+                    <Comments toggleModal={toggleModal} ticketId={modalsInfo.ticket._id} currUser={currUser} />
                 </div>
             </div>
             {manageModals()}
