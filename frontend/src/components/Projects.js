@@ -18,11 +18,10 @@ const Projects = ({ toggleModal, currUser }) => {
         fetchApi('app/projects', 'GET', null, (data) => {
             if (data.success === true) {
                 let ids = projects.map(project => [project['_id'], project['updatedAt']]);
-                let dataIds = data.projects.map(project => [project['_id'], project['updatedAt']]);
-                if (JSON.stringify(ids) !== JSON.stringify(dataIds)) {
-                    let filteredProjects = filterProjects(data.projects);
+                let filteredProjects = filterProjects(data.projects);
+                let dataIds = filteredProjects.map(project => [project['_id'], project['updatedAt']]);
+                if (JSON.stringify(ids) !== JSON.stringify(dataIds))
                     setProjects(filteredProjects);
-                }
             }
         });
     };

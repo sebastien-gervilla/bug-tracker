@@ -18,11 +18,10 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
         fetchApi(`app/tickets/project/${projectId}`, 'GET', null, (data) => {
             if (data.success === true) {
                 let infos = tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
-                let dataInfos = data.tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
-                if (JSON.stringify(infos) !== JSON.stringify(dataInfos)) {
-                    let filteredTickets = filterTickets(data.tickets);
+                let filteredTickets = filterTickets(data.tickets);
+                let dataInfos = filteredTickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
+                if (JSON.stringify(infos) !== JSON.stringify(dataInfos))
                     setTickets(filteredTickets);
-                }
             }
         });
     };
@@ -37,6 +36,7 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
                 return true;
             return false;
         });
+        console.log(tickets)
         return tickets;
     };
 
