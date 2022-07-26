@@ -20,7 +20,11 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
                 let infos = tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
                 let dataInfos = data.tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
                 if (JSON.stringify(infos) !== JSON.stringify(dataInfos)) {
-                    let newTickets = data.tickets.filter(ticket => ticket.membersId.includes(currUser._id));
+                    let newTickets = data.tickets.filter(ticket => {
+                        if (ticket.membersId.includes(currUser._id) || ticket.authorId === currUser._id)
+                            return true;
+                        return false;
+                    });
                     setTickets(newTickets);
                 }
             }
@@ -55,7 +59,7 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
         for (let i = 6 * page; i < end; i++) {
             const ticket = tickets[i];
             ticks.push(<Ticket ticket={ticket} loadTickets={loadTickets} 
-                                toggleModal={toggleModal} key={ticket._id} />);
+            toggleModal={toggleModal} key={ticket._id} currUserRole={currUser.role} />);
         };
         return ticks;
     };

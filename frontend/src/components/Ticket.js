@@ -4,7 +4,7 @@ import { RiMore2Line } from 'react-icons/ri';
 import MoreMenu from './MoreMenu';
 import { fetchApi } from '../utils/api-fetch';
 
-const Ticket = ({ ticket, loadTickets, toggleModal }) => {
+const Ticket = ({ ticket, loadTickets, toggleModal, currUserRole }) => {
 
     const [openMore, setOpenMore] = useState(false);
 
@@ -26,12 +26,17 @@ const Ticket = ({ ticket, loadTickets, toggleModal }) => {
         });
     };
 
+    const manageMoreButton = () => {
+        if (currUserRole === 'Admin' || currUserRole === 'Manager')
+            return <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
+    };
+
     return (
         <div className="ticket app-collection-el">
             <p className="first"><NavLink to={'/app/tickets/' + ticket._id} >{ticket.name}</NavLink></p>
             <p className="second">{ticket.desc}</p>
             <p className="third">{ticket.author}</p>
-            <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
+            {manageMoreButton()}
             {manageMore()}
         </div>
     );
