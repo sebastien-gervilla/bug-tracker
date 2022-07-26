@@ -2,7 +2,7 @@ import React from 'react';
 import { MdDelete } from 'react-icons/md';
 import { fetchApi } from '../../utils/api-fetch';
 
-const Comment = ({ comment, loadComments }) => {
+const Comment = ({ comment, loadComments, canRemoveComment }) => {
 
     const handleDelete = (event) => {
         event.preventDefault();
@@ -17,11 +17,16 @@ const Comment = ({ comment, loadComments }) => {
         });
     };
 
+    const manageRemoveButton = () => {
+        if (canRemoveComment(comment.authorId))
+            return <button><MdDelete className='delete-btn' onClick={handleDelete} /></button>
+    };
+
     return (
         <div className="comment">
             <p className="author">{comment.author}</p>
             <p className="message">{comment.message}</p>
-            <button><MdDelete className='delete-btn' onClick={handleDelete} /></button>
+            {manageRemoveButton()}
         </div>
     );
 };

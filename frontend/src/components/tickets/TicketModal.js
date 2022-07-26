@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { fetchApi } from '../../utils/api-fetch';
 import SingleSelect from '../SingleSelect';
-import { getTicketDef } from '../../utils/model-defaults';
+import { getTicketDef, getUserDef } from '../../utils/model-defaults';
 import TicketMemberSel from './TicketMemberSel';
 
 const TicketModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
 
     const [tickInfo, setTickInfo] = useState(getTicketDef());
+
+    const [currUser, setCurrUser] = useState(getUserDef());
+
+    useEffect(() => {
+        fetchApi('account/', 'GET', null, (data) => {
+            if (data.success === true)
+                setCurrUser(data.user);
+        });
+    }, []);
 
     useEffect(() => {
         setTickInfo(ticketInfo);
@@ -56,6 +65,14 @@ const TicketModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
         });
     };
 
+    const manageUserSelect = () => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return <div className="form-input">
+                        <p>AJOUTER DES MEMBRES</p>
+                        <TicketMemberSel projMembersId={projMembersId} handleSelectChanges={handleSelectChanges} ticketId={ticketInfo._id} />
+                    </div>
+    }
+
     return (
         <div className="pop-up">
             <form className="add-form">
@@ -89,10 +106,7 @@ const TicketModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
                         handleChanges={handleChanges} value={tickInfo.status} />
                     </div>
                 </div>
-                <div className="form-input">
-                    <p>AJOUTER DES MEMBRES</p>
-                    <TicketMemberSel membersId={projMembersId} handleSelectChanges={handleSelectChanges} ticketId={ticketInfo._id} />
-                </div>
+                {manageUserSelect()}
                 <div className="form-input">
                     <input onClick={handleSubmit} name="submit" type="submit" value="Valider"/>
                 </div>

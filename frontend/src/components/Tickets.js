@@ -18,13 +18,26 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
         fetchApi(`app/tickets/project/${projectId}`, 'GET', null, (data) => {
             if (data.success === true) {
                 let infos = tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
-                let dataInfos = data.tickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
-                if (JSON.stringify(infos) !== JSON.stringify(dataInfos)) {
-                    let newTickets = data.tickets.filter(ticket => ticket.membersId.includes(currUser._id));
-                    setTickets(newTickets);
-                }
+                let filteredTickets = filterTickets(data.tickets);
+                let dataInfos = filteredTickets.map(ticket => [ticket['_id'], ticket['updatedAt']]);
+                if (JSON.stringify(infos) !== JSON.stringify(dataInfos))
+                    setTickets(filteredTickets);
             }
         });
+    };
+
+    const filterTickets = (dataTickets) => {
+        if (currUser.role !== 'Développeur')
+            return dataTickets;
+
+        let tickets = dataTickets.filter(ticket => {
+            if (ticket.membersId.includes(currUser._id) || 
+                ticket.authorId === currUser._id)
+                return true;
+            return false;
+        });
+        
+        return tickets;
     };
 
     const [page, setPage] = useState(0);
@@ -55,7 +68,7 @@ const Tickets = ({ toggleModal, projectId, currUser }) => {
         for (let i = 6 * page; i < end; i++) {
             const ticket = tickets[i];
             ticks.push(<Ticket ticket={ticket} loadTickets={loadTickets} 
-                                toggleModal={toggleModal} key={ticket._id} />);
+            toggleModal={toggleModal} key={ticket._id} currUserRole={currUser.role} />);
         };
         return ticks;
     };

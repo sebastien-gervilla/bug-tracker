@@ -18,13 +18,25 @@ const Projects = ({ toggleModal, currUser }) => {
         fetchApi('app/projects', 'GET', null, (data) => {
             if (data.success === true) {
                 let ids = projects.map(project => [project['_id'], project['updatedAt']]);
-                let dataIds = data.projects.map(project => [project['_id'], project['updatedAt']]);
-                if (JSON.stringify(ids) !== JSON.stringify(dataIds)) {
-                    let newProjects = data.projects.filter(project => project.membersId.includes(currUser._id));
-                    setProjects(newProjects);
-                }
+                let filteredProjects = filterProjects(data.projects);
+                let dataIds = filteredProjects.map(project => [project['_id'], project['updatedAt']]);
+                if (JSON.stringify(ids) !== JSON.stringify(dataIds))
+                    setProjects(filteredProjects);
             }
         });
+    };
+
+    const filterProjects = (dataProjects) => {
+        if (currUser.role !== 'Développeur')
+            return dataProjects;
+
+        let projects = dataProjects.filter(ticket => {
+            if (ticket.membersId.includes(currUser._id) || 
+                ticket.authorId === currUser._id)
+                return true;
+            return false;
+        });
+        return projects;
     };
 
     const [page, setPage] = useState(0);
@@ -55,7 +67,7 @@ const Projects = ({ toggleModal, currUser }) => {
         for (let i = 6 * page; i < end; i++) {
             const project = projects[i];
             projs.push(<Project project={project} loadProjects={loadProjects} 
-                                toggleModal={toggleModal} key={project._id} />);
+                                toggleModal={toggleModal} currUser={currUser} key={project._id} />);
         };
         return projs;
     };

@@ -62,7 +62,8 @@ const Members = ({ toggleModal, ticketId, currUser }) => {
 
         for (let i = 4 * page; i < end; i++) {
             const member = members[i];
-            comms.push(<Member member={member} loadMembers={loadMembers} ticketId={ticketId} key={member._id} />);
+            comms.push(<Member member={member} loadMembers={loadMembers} ticketId={ticketId} 
+                                key={member._id} currUserRole={currUser.role} />);
         };
         return comms;
     };

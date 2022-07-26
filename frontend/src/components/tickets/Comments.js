@@ -3,7 +3,7 @@ import { fetchApi } from '../../utils/api-fetch';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 import Comment from './Comment';
 
-const Comments = ({ toggleModal, ticketId }) => {
+const Comments = ({ toggleModal, ticketId, currUser }) => {
 
     const [comments, setComments] = useState([]);
 
@@ -79,9 +79,16 @@ const Comments = ({ toggleModal, ticketId }) => {
 
         for (let i = 6 * page; i < end; i++) {
             const comment = comments[i];
-            comms.push(<Comment comment={comment} loadComments={loadComments} key={comment._id} />);
+            comms.push(<Comment comment={comment} loadComments={loadComments}
+                canRemoveComment={canRemoveComment} key={comment._id} />);
         };
         return comms;
+    };
+
+    const canRemoveComment = (authorId) => {
+        if (currUser.role !== 'Développeur')
+            return true;
+        return authorId === currUser._id ? true : false;
     };
 
     return (
