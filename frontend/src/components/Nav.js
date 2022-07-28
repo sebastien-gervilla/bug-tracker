@@ -22,10 +22,10 @@ const Nav = () => {
     return (
         <nav>
             <ul>
+                <li><NavLink to='/app/profile' >Profile</NavLink></li>
                 <li><NavLink to='/app/projects' >Projets</NavLink></li>
                 {manageNavLinks()}
                 {/* <li><NavLink to='/' >Tickets</NavLink></li> */}
-                <li><NavLink to='/app/profile' >Profile</NavLink></li>
             </ul>
         </nav>
     );
