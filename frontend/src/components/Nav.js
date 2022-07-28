@@ -16,14 +16,16 @@ const Nav = () => {
 
     const manageNavLinks = () => {
         if (userRole === 'Admin')
-            return <li><NavLink to='/app/team' >Equipe</NavLink></li>
-    }
+            return <li><NavLink className={manageClassName} to='/app/team' >Equipe</NavLink></li>
+    };
+
+    const manageClassName = ({ isActive }) => isActive ? "active" : "";
 
     return (
         <nav>
             <ul>
-                <li><NavLink to='/app/profile' >Profile</NavLink></li>
-                <li><NavLink to='/app/projects' >Projets</NavLink></li>
+                <li><NavLink className={manageClassName} to='/app/profile' >Profile</NavLink></li>
+                <li><NavLink className={manageClassName} to='/app/projects' >Projets</NavLink></li>
                 {manageNavLinks()}
                 {/* <li><NavLink to='/' >Tickets</NavLink></li> */}
             </ul>
