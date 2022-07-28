@@ -51,26 +51,6 @@
 
             font-size: 1.4rem;
 
-            &::after {
-                position: absolute;
-                content: '';
-                left: 0;
-                top: 0;
-
-                width: .2rem;
-                height: 100%;
-
-                background-color: $main-color;
-
-                transform: scale(1, 0);
-                transition: .2s ease;
-            }
-
-            &:hover::after {
-                transform: scale(1);
-                transition: .2s ease;
-            }
-
             a {
                 display: flex;
                 justify-content: center;
@@ -80,6 +60,27 @@
                 height: 100%;
 
                 text-align: center;
+
+                &::after {
+                    position: absolute;
+                    content: '';
+                    left: 0;
+                    top: 0;
+    
+                    width: .2rem;
+                    height: 100%;
+    
+                    background-color: $main-color;
+    
+                    transform: scale(1, 0);
+                    transition: .2s ease;
+                }
+
+                &:hover::after,
+                &.active::after {
+                    transform: scale(1);
+                    transition: .2s ease;
+                }
             }
         }
     }
