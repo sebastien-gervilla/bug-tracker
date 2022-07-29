@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Landing = ({ setHomeState }) => {
-
-    const handleHomeState = () => setHomeState('demo');
+const Landing = () => {
 
     return (
         <section id='landing-area'>
@@ -18,7 +16,7 @@ const Landing = ({ setHomeState }) => {
                     </div>
                     <div className="links">
                         <NavLink to='/account/login' >Se connecter</NavLink>
-                        <button onClick={handleHomeState} >Version demo</button>
+                        <NavLink to='/account/demo' >Version demo</NavLink>
                     </div>
                 </div>
                 <img src={require('../../assets/images/Management.png')} alt="Team Project Management" />

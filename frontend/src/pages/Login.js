@@ -55,7 +55,8 @@ const Login = () => {
                             <input onClick={handleSubmit} name="submit" type="submit" value="Se connecter" />
                         </div>
                     </form>
-                    <NavLink to='/' >Forgot your password ?</NavLink>
+                    <NavLink to='/' >Mot de passe oublié ?</NavLink>
+                    <NavLink to='/account/demo' >Essayer une version demo</NavLink>
                 </div>
             </section>
         </section>

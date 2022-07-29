@@ -4,7 +4,7 @@ import { RiMore2Line } from 'react-icons/ri';
 import MoreMenu from './MoreMenu';
 import { NavLink } from 'react-router-dom';
 
-const Project = ({ project, loadProjects, toggleModal }) => {
+const Project = ({ project, loadProjects, toggleModal, currUser }) => {
 
     const [openMore, setOpenMore] = useState(false);
 
@@ -16,6 +16,11 @@ const Project = ({ project, loadProjects, toggleModal }) => {
         if (openMore) 
             return <MoreMenu objInfo={project} deleteObj={deleteProject}
             toggleModal={toggleModal} toggleMore={toggleMore} modalName={'projects'} />;
+    };
+
+    const manageMoreButton = () => {
+        if (currUser.role === 'Admin' || currUser.role === 'Manager')
+            return <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
     };
 
     const deleteProject = () => {
@@ -31,7 +36,7 @@ const Project = ({ project, loadProjects, toggleModal }) => {
             <p className="first"><NavLink to={'/app/projects/' + project._id} >{project.name}</NavLink></p>
             <p className="second">{project.desc}</p>
             <p className="third">{project.author}</p>
-            <button className='more-button'><RiMore2Line onClick={toggleMore} /></button>
+            {manageMoreButton()}
             {manageMore()}
         </div>
     );
