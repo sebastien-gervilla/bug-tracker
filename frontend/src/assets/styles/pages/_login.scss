@@ -33,6 +33,10 @@
             color: $main-color;
 
             text-align: center;
+
+            &:first-of-type {
+                margin-bottom: 1rem;
+            }
         }
     }
 }
