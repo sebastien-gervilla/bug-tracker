@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Landing = () => {
+
     return (
         <section id='landing-area'>
             <div className="landing-content">
@@ -15,10 +16,10 @@ const Landing = () => {
                     </div>
                     <div className="links">
                         <NavLink to='/account/login' >Se connecter</NavLink>
-                        <NavLink to='/' >Version demo</NavLink>
+                        <NavLink to='/account/demo' >Version demo</NavLink>
                     </div>
                 </div>
-                <img src={require('../../assets/images/Management.png')} alt="Project Management Image" />
+                <img src={require('../../assets/images/Management.png')} alt="Team Project Management" />
             </div>
         </section>
     );

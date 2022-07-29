@@ -12,7 +12,11 @@ const Team = ({ toggleModal }) => {
     const loadUsers = () => {
         fetchApi('account/getusers', 'GET', null, (data) => {
             if (data.success === true) {
-                const dataUsers = data.users.filter(user => user.role !== "Admin");
+                const dataUsers = data.users.filter(user => {
+                    if (user.role === 'Admin' || user.name === 'Développeur' || user.name === 'Manager')
+                        return false;
+                    return true
+                });
                 const ids = users.map(user => [user._id, user.updatedAt]);
                 const dataIds = dataUsers.map(user => [user._id, user.updatedAt]);
                 if (JSON.stringify(ids) !== JSON.stringify(dataIds))

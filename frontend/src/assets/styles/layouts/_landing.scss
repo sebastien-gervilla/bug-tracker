@@ -50,7 +50,7 @@
             .links {
                 width: 100%;
 
-                a {
+                a, button {
                     @include flex-center;
     
                     width: 100%;
@@ -69,6 +69,7 @@
                     }
     
                     &:hover {
+                        cursor: pointer;
                         transition: .2s ease;
 
                         background-color: $light-color;

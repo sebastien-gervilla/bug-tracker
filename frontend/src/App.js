@@ -7,12 +7,14 @@ import AppProject from './pages/AppProject';
 import AppProfile from './pages/AppProfile';
 import AppTicket from './pages/AppTicket';
 import AppTeam from './pages/AppTeam';
+import Demo from './pages/Demo';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} ></Route>
+        <Route path='/account/demo' element={<Demo />} ></Route>
         <Route path='/account/login' element={<Login />} ></Route>
         <Route path='/app/projects' element={<AppProjects />} ></Route>
         <Route path='/app/projects/:id' element={<AppProject />} ></Route>
