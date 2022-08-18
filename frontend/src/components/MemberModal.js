@@ -42,7 +42,7 @@ const MemberModal = ({ ticketInfo, toggleModal, modalType, projMembersId }) => {
                 </div>
                 <div className="form-input" id='add-members'>
                     <p>AJOUTER DES MEMBRES</p>
-                    <TicketMemberSel membersId={projMembersId} handleSelectChanges={handleSelectChanges} ticketId={ticketInfo._id}/>
+                    <TicketMemberSel projMembersId={projMembersId} handleSelectChanges={handleSelectChanges} ticketId={ticketInfo._id}/>
                 </div>
                 <div className="form-input">
                     <input onClick={handleSubmit} name="submit" type="submit" value="Valider"/>
