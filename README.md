@@ -5,12 +5,15 @@
 ### Installation
 
 -> Download the ZIP file
+
 -> Install the dependencies (package.json)
+
 -> Fill the .env.exemple file
 
 ### Running
 
 -> Open the terminal
+
 -> Type in `npm run dev`
 
 ## Technologies
